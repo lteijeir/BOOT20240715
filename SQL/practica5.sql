@@ -10,7 +10,7 @@ FROM EMPLOYEES;
 SELECT LAST_NAME, COMMISSION_PCT,
 (CASE 
     WHEN COMMISSION_PCT IS NULL THEN 'No comission'
-    ELSE TO_CHAR(COMMISSION_PCT)
+    ELSE TO_CHAR(COMMISSION_PCT,'0.00')
 END)
 FROM EMPLOYEES;
 /
@@ -44,5 +44,5 @@ SELECT JOB_ID,
                     'IT_PROG', 'C',
                     'SA_REP', 'D',
                     'ST_CLERK', 'E',
-                    'None of the above')
+                    '0')
 FROM EMPLOYEES;
