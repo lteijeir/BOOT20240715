@@ -3,7 +3,7 @@ DECLARE
     v_deptno NUMBER := 10;
     CURSOR c_emp_cursor IS
         SELECT LAST_NAME, SALARY, MANAGER_ID
-        FROM EPLOYEES
+        FROM EMPLOYEES
         WHERE DEPARTMENT_ID = v_deptno;
 BEGIN 
     FOR emp_record in c_emp_cursor
@@ -39,6 +39,18 @@ BEGIN
             FETCH c_dept_cursor INTO v_current_deptno, v_current_dname;
             EXIT WHEN c_dept_cursor%NOTFOUND;
             DBMS_OUTPUT.PUT_LINE('Department Number: ' || v_current_deptno || ' Department Name: ' || v_current_dname);
+            IF c_emp_cursor%ISOPEN THEN 
+                CLOSE c_emp_cursor; 
+            END IF; 
+            OPEN c_emp_cursor (v_current_deptno); 
+            LOOP 
+                FETCH c_emp_cursor INTO  v_ename,v_job,v_hiredate,v_sal; 
+                EXIT WHEN c_emp_cursor%NOTFOUND; 
+                DBMS_OUTPUT.PUT_LINE (v_ename || ' ' ||  v_job  
+                || ' '  ||  v_hiredate || ' ' ||  v_sal);        
+            END LOOP; 
+            DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------------------------------'); 
+            CLOSE c_emp_cursor;
         END LOOP;
     CLOSE c_dept_cursor;
 END;
@@ -52,6 +64,7 @@ DECLARE
         FROM        employees 
         ORDER BY    salary DESC;
 BEGIN 
+    DELETE FROM top_salaries;
     OPEN c_emp_cursor; 
     FETCH c_emp_cursor INTO  v_sal; 
     WHILE c_emp_cursor%ROWCOUNT <= v_num AND c_emp_cursor%FOUND 
@@ -63,4 +76,4 @@ BEGIN
     CLOSE c_emp_cursor;   
 END;
 /
-SELECT * FROM top_salaries;
+SELECT * FROM top_salaries;s
