@@ -23,5 +23,5 @@ def p1 = new Punto([x: 10, y: 5]), p2 = new Punto([x: 5, y: 10])
 assert (p1 + p2) == new Punto([x: 15, y: 15])
 assert (p1 + 1) == new Punto([x: 11, y: 6])
 assert (p1 - p2) == new Punto([x: 5, y: -5])
+println (p1 - p2)
 println 'ok'
-
